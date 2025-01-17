@@ -1,0 +1,73 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7552516974482581"
+    crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cadastro filme</title>
+    <link rel="stylesheet" href="{% static 'css/cadastra_filme.css' %}">
+</head>
+<body>
+    <form method="POST" action="{% url 'cadastrar_filme' %}">{% csrf_token %}
+        <h2>pesquisar nome publico</h2>
+        <input name="pesquisa" type="text">
+        {% if pesquisa %}
+            <h3>retorno: {{pesquisa}}</h3>
+        {% else %}
+            <h3>retorno...</h3> 
+        {% endif %}
+        <button type="submit">enviar </button>
+    </form>
+
+
+    <form method="POST" action="{% url 'cadastrar_filme' %}">{% csrf_token %}
+        <h3><input placeholder="nome" type="text" name="nome"></h3>
+        
+        <h3><input placeholder="genero" type="text" name="genero"></h3>
+        
+
+        <h3><input placeholder="link" type="text " name="link"></h3>
+
+        <form action="{% url 'cadastrar_filme' %}">
+            <label for="tipo_link">Escolha um tópico:</label>
+            <select id="tipo_link" name="tipo_link">
+                <option value="filme">filme</option>
+
+                <option value="eps">eps</option>
+
+                <option value="ep1">ep1</option>
+                <option value="ep2">ep2</option>
+                <option value="ep3">ep3</option>
+                <option value="ep4">ep4</option>
+                <option value="ep5">ep5</option>
+                <option value="ep6">ep6</option>
+                <option value="ep7">ep7</option>
+                <option value="ep8">ep8</option>
+                <option value="ep9">ep9</option>
+                <option value="ep10">ep10</option>
+                <option value="ep11">ep11</option>
+                <option value="ep12">ep12</option>
+                <option value="ep13">ep13</option>
+
+            </select>
+        </form>
+        
+        <button type="submit" style="margin-top: 40px;">cadastrar</button>
+    </form>
+    
+        
+        <h3 style="color: aliceblue;">{{filme.nome}}</h3>
+        
+        <h3 style="color: aliceblue;">{{filme.sinopse}}</h3>
+        {%if mensagem%}
+            {{mensagem}}
+        {% endif%}
+
+
+
+
+</body>
+</html>

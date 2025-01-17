@@ -1,0 +1,152 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    color: rgb(255, 255, 255);
+    font-family: "Poppins", sans-serif;
+}
+a{
+    color: none;
+    font-style: none;
+    text-decoration: none;
+}
+
+
+body{
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(180deg, #100124 0%, rgba(30, 29,79,0.8)100%);
+    display: flex;   
+    flex-direction: column;
+}
+
+#esquerdo{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-around;
+}
+
+#esquerdo a {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#esquerdo form{
+    justify-content: space-between;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+#esquerdo form button{
+    margin: 0px;
+    border: none;
+    height: 50px;
+
+    
+}
+#esquerdo form button:hover{
+    cursor: pointer;
+    background-color: rgb(223, 148, 79);
+}
+
+#esquerdo form button img{
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    width: 100%;
+    text-align: center;
+}
+#esquerdo form input{
+    border: none;
+    width: 100%;
+    height: 50px;
+    color: black;
+    font-size: 18px;
+}
+
+#abas{
+    align-items: center;
+    text-align: center;
+    display: flex;
+}
+#abas form{
+    background-color: transparent;
+    margin-bottom: 40px;
+}
+#abas #a{
+    padding: 15px;
+}
+#abas form button{
+    background-color: transparent;
+    
+}
+#abas form button img{
+    width: 60px;		
+}
+#abas form button h3{
+    font-size: 30px;	
+}
+
+#direito{
+    margin-top: 40px;
+    margin-left: 100px;
+    gap: 60px;
+
+    width: fit-content;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#direito form{
+    display: flex;
+    margin-bottom: 150px;
+    width: 150px;
+    height: 150px;   	
+    
+
+}
+#direito form button{
+    background-color: transparent;
+    cursor: pointer;   
+    border: none;
+}
+
+#direito form img{
+    width: 200px;
+    height: 250px;
+    border-radius: 20px;
+}
+
+#direito form button h3{
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 20px;
+    color: #ffffff;
+    box-shadow: 0px 0px 10px 0px black;
+}
+
+.pagination{
+    margin-bottom: 40px;
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    
+    justify-content: center;
+    
+}
+.pagination span h3{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    
+}
+
+.pagination span h3 a{
+    background-color: rgb(83, 22, 0);
+    border-radius: 20PX;
+    padding: 15px;
+}
