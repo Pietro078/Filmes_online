@@ -22,18 +22,5 @@ class MagnetcLinks(models.Model):
 class link_series(models.Model):
     id = models.IntegerField( primary_key=True)
     link_eps = models.CharField(max_length=100, blank=True)
-
-    link_ep1 = models.CharField(max_length=100, blank=True)
-    link_ep2 = models.CharField(max_length=100, blank=True)
-    link_ep3 = models.CharField(max_length=100, blank=True)
-    link_ep4 = models.CharField(max_length=100, blank=True)
-    link_ep5 = models.CharField(max_length=100, blank=True)
-    link_ep6 = models.CharField(max_length=100, blank=True)
-    link_ep7 = models.CharField(max_length=100, blank=True)
-    link_ep8 = models.CharField(max_length=100, blank=True)
-    link_ep9 = models.CharField(max_length=100, blank=True)
-    link_ep10 = models.CharField(max_length=100, blank=True)
-    link_ep11 = models.CharField(max_length=100, blank=True)
-    link_ep12 = models.CharField(max_length=100, blank=True)
-    link_ep13 = models.CharField(max_length=100, blank=True)
+    ep_name = models.CharField(max_length=20, blank=True, null=True)
 
