@@ -47,7 +47,7 @@
         
       {% for filmes in filme%}
 
-          <form action="{% url 'filme' filmes.id %}"  method="POST"> {% csrf_token %}
+          <form action="{% url 'filme' id=filmes.id %}"  method="POST"> {% csrf_token %}
             <button type="submit">
                 
                   <img id="imagem_filme" src="https://image.tmdb.org/t/p/w500/{{ filmes.tamb }}">

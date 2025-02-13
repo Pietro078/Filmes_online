@@ -6,42 +6,43 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from filmes_projetc.models import Filmes, MagnetcLinks
+from django.views.generic import View
+from django.views.generic.detail import DetailView
+from django.views.generic import ListView
 
 SECRETKEY = '17528cca6d733031cd27a0916ee4cde5'
 
-from filmes_projetc.models import Filmes, MagnetcLinks
 user = User.objects.get(id=1)
 
-def home(request):
-    #Filmes.objects.all().order_by('-id')
-    if request.method=='GET':
-        filme=Filmes.objects.all().order_by('-id')
-        paginator = Paginator(filme, 15)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        ff = 'filme'
-        ss = 'serie'
-        return render(request, 'home.html', {'filme': page_obj, 'page_obj':page_obj, 'ff':ff, 'ss':ss})
-    
-    
+class Home(ListView):
+    model = Filmes
+    template_name = 'home.html'
+    context_object_name = 'filme'
+    ordering = ['-id']
+    paginate_by = 20
 
-    
-                    
-    return render(request, 'home.html', {'filme': page_obj, 'page_obj':page_obj, 'ff':ff, 'ss':ss})
 
-def filme(request, id):
-    if request.method == 'GET':
-        filme = Filmes.objects.get(id=id)
-        links = MagnetcLinks.objects.get(id=id)
-
-        return render(request, 'filme.html', {'filme': filme, 'links':links})
-    
-    if request.method == 'POST':  
-        filme = Filmes.objects.get(id=id)
-        links = MagnetcLinks.objects.get(id=id)
-
-        return render(request, 'filme.html', {'filme': filme, 'links':links})
-
+class Filme(View):
+    def get(self, request, id):
+        try:
+            filme = Filmes.objects.get(id=id)
+            links = MagnetcLinks.objects.get(id=id)
+            return render(request, 'filme.html', {'filme': filme, 'links':links})
+        
+        except:
+            return render(request, 'filme.html', {'filme': filme, 'links':links})
+        
+    def post(self,request, id):
+        try:
+            id = self.kwargs.get("id")
+            filme = Filmes.objects.get(id=id)
+            links = MagnetcLinks.objects.get(id=id)
+            return render(request, 'filme.html', {'filme': filme, 'links':links})
+        
+        except: 
+            raise TypeError("erro na chamada do id")
+        
 def is_admin(user):
     return user.is_superuser
 
@@ -65,16 +66,14 @@ def cadastrar_filme(request):
                 return render(request, 'cadastrar_filme.html', {'pesquisa': a['title']})
         if user.is_superuser:
             if nome:
-                # Busca o filme na API do TMDB pelo nome
+            
                 busca = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={SECRETKEY}&language=pt-BR&query={nome}")
                 busca = busca.json()
 
-                try:
-                # Verifica se já existe um filme com o mesmo nome
-                    Filmes.objects.get(nome=nome)
+                if  Filmes.objects.filter(nome=nome).exists():
                     mensagem = 'Filme já existe e não pode ser criado novamente.'
                     return render(request, 'cadastrar_filme.html', {'mensagem': mensagem})
-                except ObjectDoesNotExist:
+                else:
                     if 'results' in busca and busca['results']:
                         n = 0
                         
