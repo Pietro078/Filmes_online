@@ -1,0 +1,161 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    color: rgb(255, 255, 255);
+    font-family: "Poppins", sans-serif;
+}
+a{
+    color: none;
+    font-style: none;
+    text-decoration: none;
+}
+
+
+body{
+    overflow-x: hidden;
+    height: 100%;
+    width: fit-content;
+    background: linear-gradient(180deg, #100124 0%, rgba(30, 29,79,0.8)100%);
+    display: flex;   
+}
+
+#esquerdo{
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+#esquerdo a {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#esquerdo form{
+    justify-content: space-between;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+#esquerdo form button{
+    margin: 0px;
+    border: none;
+    height: 50px;
+
+    
+}
+#esquerdo form button:hover{
+    cursor: pointer;
+    background-color: rgb(0, 43, 59);
+}
+#esquerdo form button:active{
+    cursor: pointer;
+    background-color: rgb(0, 90, 117);
+}
+    
+#esquerdo form button img{
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    width: 100%;
+    text-align: center;
+}
+#esquerdo form input{
+    border: none;
+    width: 100%;
+    height: 50px;
+    color: black;
+    font-size: 18px;
+}
+
+#abas{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    margin-bottom: 20px;
+}
+#abas form{
+    
+    display: flex;
+    padding: 10px;
+    background-color: transparent;
+    
+}
+
+#abas form button{
+    display: flex;
+    border-radius: 20px;
+    background-color: rgb(130, 143, 255);
+}
+#abas form button img{
+    justify-content: center;
+    width: 60px;	
+    
+}
+#abas form button h3{
+    font-size: 30px;
+}
+
+#direito{
+    margin-top: 40px;
+    margin-left: 2.5%;
+
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#direito form{
+    justify-content: center;
+    display: flex;
+    margin-bottom: 80px; 	
+    width: 250px;
+    height: fit-content;
+
+}
+#direito form button{
+    background-color: transparent;
+    cursor: pointer;   
+    border: none;
+}
+
+#direito form img{
+    width: 200px;
+    height: 250px;
+    border-radius: 20px;
+}
+
+#direito form button h3{
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 20px;
+    color: #ffffff;
+    box-shadow: 0px 0px 10px 0px black;
+}
+
+.pagination{
+    margin-bottom: 40px;
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    
+    justify-content: center;
+    
+}
+.pagination span h3{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    
+}
+
+.pagination span h3 a{
+    background-color: rgb(83, 22, 0);
+    border-radius: 20PX;
+    margin: 10px;
+    padding: 10px;
+}
