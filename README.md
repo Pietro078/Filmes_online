@@ -18,3 +18,6 @@ Achei necessario fazer um logica por que algumas variveis estavam mau apresentad
 
 Da mesma forma todos os arquivos estaticos estam no arquivo estatic. Rota: static/
 Esta contito nele os arquivos CSS´s; imagens; logica de programação.
+
+algumas coisas como segurança de variaveis e alocar as devidas pastas ao git.ignore não foram feitas ainda.
+
