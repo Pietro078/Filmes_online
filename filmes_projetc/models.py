@@ -23,4 +23,5 @@ class link_series(models.Model):
     id = models.IntegerField( primary_key=True)
     link_eps = models.CharField(max_length=100, blank=True)
     ep_name = models.CharField(max_length=20, blank=True, null=True)
+    id_vinculado = models.IntegerField(blank=True,default=0)
 

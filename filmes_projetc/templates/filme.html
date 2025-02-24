@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Filmes project</title>
-    <link rel="stylesheet" href="{% static 'css/filmesss.css' %}">
+    <link rel="stylesheet" href="{% static 'css/filmes.css' %}">
 </head>
   <body>
     
@@ -62,11 +62,21 @@
             <h3 style="margin-top: 10px;">SINOPSE:  </h3>
             <h3>{{ filme.sinopse }}</h3>
             
+            {%if filme.genero == "filme" %}
             
-            <a href="{% url 'propaganda' filme.id %}" target="_blank">
+            <a  href="{% url 'propaganda' filme.id %}" target="_blank">
               <h3>Magnetc link</h3>
             </a>
-
+            {% else %}
+            {% for a, b in linksEP|zip_lists:nomeEp %}
+            <div id="ma">
+                <a id="ma" href="{{ a.link_eps }}" target="_blank">
+                    <h3>{{ b }}</h3>
+              </a>
+            </div>
+            {% endfor %}
+        {% endif %}
+          
           </div>
         </div>
       </div>
@@ -76,7 +86,7 @@
             <p>Bem-vindo, Administrador!</p>
 
             
-
+          {% if filme.genero == "filme" %}
             <div class="edit">
               <h1>editar filme</h1>
               <form method="POST" action="{% url 'editar_filme' filme.id%}">{% csrf_token %}
@@ -95,6 +105,37 @@
               </form>
       
             </div>
+          {%else%}
+          <div class="edit">
+            <h1>editar ep filme</h1>
+            <form method="POST" action="{% url 'editar_filme' filme.id%}">{% csrf_token %}
+                <h3><input placeholder="nome" type="text" name="nome"></h3>
+                
+                <h3><input placeholder="genero" type="text" name="genero"></h3>
+
+                <div>
+                  <h3><input name="nomeEP" type="text" placeholder="nomeEP"></h3>
+                  <h3><input name="linksEP" type="text" placeholder="link ep"></h3>
+                </div>
+                
+                <div>
+                  {% for a in linksEP%}
+                    <h3>{{a.ep_name}}</h3>
+                    <h3>{{a.link_eps}}</h3> 
+                    <P>---</P>
+                  {%endfor%}
+                </div>
+                <input name="criar_editar_excluir" type="text" placeholder="Escolha entre criar ou editar">
+                <button type="submit">editar/criar/exluir</button>
+            </form>
+
+            <form class="edit" action="{% url 'excluir' filme.id %}" method="post">{% csrf_token %}
+
+              <button type="submit">excluir</button>
+            </form>
+    
+          </div>
+          {%endif%}
 
           {% endif %}
   </body>
