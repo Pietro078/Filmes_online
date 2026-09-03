@@ -1,16 +1,17 @@
 <div class="movie-grid" style="width: 100%; max-width: 100%;">
     {% for item in itens %}
-        <div class="movie-card">
+        <article class="movie-card movie-card--{{ item.genero }}">
             <a href="{% url 'filme' id=item.id %}">
                 {% if item.tamb %}
                     <img src="https://image.tmdb.org/t/p/w500{{ item.tamb }}" alt="{{ item.nome }}">
                 {% endif %}
                 <div class="movie-card-content">
+                    <span class="content-type content-type--{{ item.genero }}">{{ item.get_genero_display }}</span>
                     <h3>{{ item.nome }}</h3>
                     <p>{{ item.data_filme|default:"Data não informada" }}</p>
                 </div>
             </a>
-        </div>
+        </article>
     {% empty %}
         <div class="no-results">
             <i class="fas fa-film"></i>
