@@ -1,10 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db import IntegrityError
+from django.db.models import F, Q
 from django.http import Http404, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.response import TemplateResponse
+from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
+from urllib.parse import urlencode
 
 from .forms import EpisodioForm, FilmeForm
 from .models import Filmes, MagnetcLinks, link_series
@@ -24,6 +28,42 @@ class Home(ListView):
     template_name = "home.html"
     context_object_name = "filme"
     paginate_by = 20
+
+    def get_queryset(self):
+        queryset = Filmes.objects.all()
+        termo = self.request.GET.get("pesquisa", "").strip()
+
+        if termo:
+            for palavra in termo.split():
+                queryset = queryset.filter(
+                    Q(nome__icontains=palavra) | Q(sinopse__icontains=palavra)
+                )
+
+        return queryset.order_by(
+            F("atualizado_em").desc(nulls_last=True),
+            F("criado_em").desc(nulls_last=True),
+            "-id",
+        )
+
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        contexto["termo_pesquisa"] = self.request.GET.get("pesquisa", "").strip()
+        contexto["titulo_catalogo"] = (
+            f'Resultados para “{contexto["termo_pesquisa"]}”'
+            if contexto["termo_pesquisa"]
+            else "Adicionados recentemente"
+        )
+        return contexto
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return TemplateResponse(
+                request=self.request,
+                template="components/catalogo_resultados.html",
+                context=context,
+                **response_kwargs,
+            )
+        return super().render_to_response(context, **response_kwargs)
 
 
 class Filme(View):
@@ -142,6 +182,7 @@ class Editar_filme(SuperuserRequiredMixin, View):
             except IntegrityError:
                 messages.error(request, "Já existe um episódio com esse nome.")
             else:
+                filme.save(update_fields=("atualizado_em",))
                 messages.success(request, "Episódio criado com sucesso.")
         else:
             messages.error(request, "Revise os dados do episódio.")
@@ -159,6 +200,7 @@ class Editar_filme(SuperuserRequiredMixin, View):
         form = EpisodioForm(request.POST, instance=episodio)
         if form.is_valid():
             form.save()
+            filme.save(update_fields=("atualizado_em",))
             messages.success(request, "Episódio atualizado com sucesso.")
         else:
             messages.error(request, "Revise os dados do episódio.")
@@ -166,21 +208,23 @@ class Editar_filme(SuperuserRequiredMixin, View):
 
     def _excluir_episodio(self, request, filme):
         self._episodio(request, filme).delete()
+        filme.save(update_fields=("atualizado_em",))
         messages.success(request, "Episódio excluído com sucesso.")
         return redirect("filme", id=filme.id)
 
 
-class Pesquisa(ListView):
-    model = Filmes
-    template_name = "pesquisa.html"
-    context_object_name = "resultado"
+class Pesquisa(View):
+    """Mantém a URL antiga, mas centraliza a busca na página inicial."""
 
-    def get_queryset(self):
-        termo = (self.request.GET.get("pesquisa") or self.request.POST.get("pesquisa") or "").strip()
-        return Filmes.objects.filter(nome__icontains=termo) if termo else Filmes.objects.none()
+    def _redirecionar(self, request):
+        termo = (request.GET.get("pesquisa") or request.POST.get("pesquisa") or "").strip()
+        destino = reverse("home")
+        if termo:
+            destino = f"{destino}?{urlencode({'pesquisa': termo})}"
+        return redirect(destino)
 
-    def post(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
+    get = _redirecionar
+    post = _redirecionar
 
 
 class Abas(ListView):
@@ -192,7 +236,11 @@ class Abas(ListView):
         self.genero = self.kwargs["genero0"]
         if self.genero not in dict(Filmes.TIPOS):
             raise Http404("Categoria inválida.")
-        return Filmes.objects.filter(genero=self.genero)
+        return Filmes.objects.filter(genero=self.genero).order_by(
+            F("atualizado_em").desc(nulls_last=True),
+            F("criado_em").desc(nulls_last=True),
+            "-id",
+        )
 
     def get_context_data(self, **kwargs):
         contexto = super().get_context_data(**kwargs)

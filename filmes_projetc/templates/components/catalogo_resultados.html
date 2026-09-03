@@ -1,0 +1,25 @@
+<section id="catalogo-resultados" aria-live="polite" aria-busy="false">
+    <div class="catalog-header">
+        <div>
+            <span class="catalog-eyebrow">Catálogo</span>
+            <h1>{{ titulo_catalogo }}</h1>
+        </div>
+        {% if termo_pesquisa %}
+            <a href="{% url 'home' %}" class="clear-search" data-catalogo-link>Limpar pesquisa</a>
+        {% endif %}
+    </div>
+
+    {% include 'components/movie_grid.html' with itens=filme %}
+
+    {% if is_paginated %}
+        <nav class="pagination" aria-label="Paginação">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if termo_pesquisa %}&pesquisa={{ termo_pesquisa|urlencode }}{% endif %}" data-catalogo-link>Anterior</a>
+            {% endif %}
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if termo_pesquisa %}&pesquisa={{ termo_pesquisa|urlencode }}{% endif %}" data-catalogo-link>Próxima</a>
+            {% endif %}
+        </nav>
+    {% endif %}
+</section>

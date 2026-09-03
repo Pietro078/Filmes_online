@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="{% static 'image/Logo filmes.png' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -17,8 +17,8 @@
         <a href="{% url 'home' %}">
             <header><img class="icon" src="{% static 'image/Logo filmes.png' %}" alt=""> Filmes Project</header>
         </a>
-        <form action="{% url 'pesquisa' %}" method="get" class="search-form">
-            <input type="search" placeholder="Pesquisar filmes e séries..." name="pesquisa" value="{{ request.GET.pesquisa }}">
+        <form action="{% url 'home' %}" method="get" class="search-form" id="catalogo-search-form">
+            <input type="search" placeholder="Pesquisar por nome ou sinopse..." name="pesquisa" value="{{ termo_pesquisa|default:'' }}" id="catalogo-search-input" autocomplete="off">
             <button type="submit" aria-label="Pesquisar"><i class="fas fa-search"></i></button>
         </form>
         <div id="abas">
@@ -41,5 +41,6 @@
     <footer><div class="footer-content"><p>&copy; {% now "Y" %} Filmes Project</p></div></footer>
 </div>
 {% block extra_js %}{% endblock %}
+<script src="{% static 'js/catalogo.js' %}" defer></script>
 </body>
 </html>

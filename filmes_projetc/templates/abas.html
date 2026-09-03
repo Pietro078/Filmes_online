@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
-
 {% block title %}{% if genero == 'serie' %}Séries{% else %}Filmes{% endif %}{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'css/maim.css' %}">{% endblock %}
 
 {% block content %}
     <div class="category-header">
