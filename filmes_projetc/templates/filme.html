@@ -1,403 +1,49 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load custom_filters %}
 
-
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/detalhe.css' %}">
-{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/detalhe.css' %}">{% endblock %}
 
 {% block content %}
-
 <div class="movie-details-container">
-
-    <!-- =====================================================
-         DETALHES DO FILME / SÉRIE
-         ===================================================== -->
-
     <div class="movie-details">
-
         <div class="movie-poster">
-            <img
-                src="https://image.tmdb.org/t/p/w500/{{ filme.tamb }}"
-                alt="{{ filme.nome }}"
-            >
+            {% if filme.tamb %}<img src="https://image.tmdb.org/t/p/w500{{ filme.tamb }}" alt="{{ filme.nome }}">{% endif %}
         </div>
-
         <div class="movie-info">
-
-            <h1 class="movie-title">
-                {{ filme.nome }}
-            </h1>
-
+            <h1 class="movie-title">{{ filme.nome }}</h1>
             <div class="movie-meta">
-
-                <span class="release-date">
-                    <i class="far fa-calendar-alt"></i>
-                    {{ filme.data_filme }}
-                </span>
-
-                <span class="genre">
-                    <i class="fas fa-film"></i>
-                    {{ filme.genero|title }}
-                </span>
-
+                <span><i class="far fa-calendar-alt"></i> {{ filme.data_filme|default:"Data não informada" }}</span>
+                <span><i class="fas fa-film"></i> {{ filme.get_genero_display }}</span>
             </div>
+            <div class="synopsis"><h3>Sinopse</h3><p>{{ filme.sinopse|default:"Sinopse não informada." }}</p></div>
 
-            <div class="synopsis">
-
-                <h3>Sinopse</h3>
-
-                <p>
-                    {{ filme.sinopse }}
-                </p>
-
-            </div>
-
-            <div class="download-section">
-
-                {% if filme.genero == "filme" %}
-
-                    <div class="download-links">
-
-                        <a
-                            href="{% url 'propaganda' filme.id %}"
-                            target="_blank"
-                            class="btn btn-download"
-                        >
-                            <i class="fas fa-magnet"></i>
-                            Baixar Filme
-                        </a>
-
-                    </div>
-
-                {% else %}
-
-                    <h3>Episódios</h3>
-
-                    <div class="episodes-list">
-
-                        {% for a, b in linksEP|zip_lists:nomeEp %}
-
-                            <div class="episode-item">
-
-                                <div class="episode-name">
-                                    {{ b }}
-                                </div>
-
-                                <a
-                                    href="{{ a.link_eps }}"
-                                    target="_blank"
-                                    class="btn btn-download"
-                                >
-                                    <i class="fas fa-download"></i>
-                                    Baixar
-                                </a>
-
-                            </div>
-
-                        {% endfor %}
-
-                    </div>
-
-                {% endif %}
-
-            </div>
-
+            {% if filme.genero == 'filme' %}
+                {% if links %}<a href="{% url 'propaganda' filme.id %}" target="_blank" class="btn btn-download">Baixar filme</a>{% endif %}
+            {% else %}
+                <h3>Episódios</h3>
+                <div class="episodes-list">
+                    {% for episodio in linksEP %}
+                        <div class="episode-item">
+                            <span>{{ episodio.ep_name }}</span>
+                            <a href="{{ episodio.link_eps }}" target="_blank" rel="noopener noreferrer" class="btn btn-download">Baixar</a>
+                        </div>
+                    {% empty %}<p>Nenhum episódio disponível.</p>{% endfor %}
+                </div>
+            {% endif %}
         </div>
-
     </div>
-
-
-    <!-- =====================================================
-         ÁREA DO ADMINISTRADOR
-         ===================================================== -->
 
     {% if user.is_superuser %}
-
-    <div class="admin-section">
-
-        <h2 class="admin-title">
-            <i class="fas fa-user-shield"></i>
-            Área do Administrador
-        </h2>
-
-        {% if filme.genero == "filme" %}
-
-        <div class="admin-form-container">
-
-            <h3>Editar Filme</h3>
-
-            <form
-                method="POST"
-                action="{% url 'editar_filme' filme.id %}"
-                class="admin-form"
-            >
-
+        <section class="admin-section">
+            <h2 class="admin-title">Área do administrador</h2>
+            {% url 'editar_filme' filme.id as editar_url %}
+            {% include 'components/filme_form.html' with action=editar_url %}
+            {% if filme.genero == 'serie' %}{% include 'components/episodios_admin.html' %}{% endif %}
+            <form action="{% url 'excluir' filme.id %}" method="post" class="delete-form">
                 {% csrf_token %}
-
-                <div class="form-group">
-
-                    <label for="nome">
-                        Nome:
-                    </label>
-
-                    <input
-                        id="nome"
-                        type="text"
-                        name="nome"
-                        placeholder="Nome do filme"
-                        class="form-control"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="genero">
-                        Gênero:
-                    </label>
-
-                    <input
-                        id="genero"
-                        type="text"
-                        name="genero"
-                        placeholder="Gênero do filme"
-                        class="form-control"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="link">
-                        Link:
-                    </label>
-
-                    <input
-                        id="link"
-                        type="text"
-                        name="link"
-                        placeholder="Link do filme"
-                        class="form-control"
-                    >
-
-                </div>
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    <i class="fas fa-save"></i>
-                    Salvar Alterações
-                </button>
-
+                <button type="submit" class="btn btn-danger">Excluir título</button>
             </form>
-
-            <form
-                action="{% url 'excluir' filme.id %}"
-                method="post"
-                class="delete-form"
-            >
-
-                {% csrf_token %}
-
-                <button
-                    type="submit"
-                    class="btn btn-danger"
-                >
-                    <i class="fas fa-trash"></i>
-                    Excluir Filme
-                </button>
-
-            </form>
-
-        </div>
-
-        {% else %}
-
-        <div class="admin-form-container">
-
-            <h3>Gerenciar Série</h3>
-
-            <form
-                method="POST"
-                action="{% url 'editar_filme' filme.id %}"
-                class="admin-form"
-            >
-
-                {% csrf_token %}
-
-                <div class="form-group">
-
-                    <label for="nome">
-                        Nome:
-                    </label>
-
-                    <input
-                        id="nome"
-                        type="text"
-                        name="nome"
-                        placeholder="Nome da série"
-                        class="form-control"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="genero">
-                        Gênero:
-                    </label>
-
-                    <input
-                        id="genero"
-                        type="text"
-                        name="genero"
-                        placeholder="Gênero da série"
-                        class="form-control"
-                    >
-
-                </div>
-
-                <div class="episode-form">
-
-                    <h4>
-                        Adicionar Episódio
-                    </h4>
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-
-                            <label for="nomeEP">
-                                Nome do Episódio:
-                            </label>
-
-                            <input
-                                id="nomeEP"
-                                name="nomeEP"
-                                type="text"
-                                placeholder="Nome do episódio"
-                                class="form-control"
-                            >
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <label for="linksEP">
-                                Link do Episódio:
-                            </label>
-
-                            <input
-                                id="linksEP"
-                                name="linksEP"
-                                type="text"
-                                placeholder="Link do episódio"
-                                class="form-control"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="episodes-list admin-episodes">
-
-                    <h4>
-                        Episódios Existentes
-                    </h4>
-
-                    {% for a in linksEP %}
-
-                    <div class="episode-item admin-episode">
-
-                        <div class="episode-info">
-
-                            <span class="episode-name">
-                                {{ a.ep_name }}
-                            </span>
-
-                            <span class="episode-link">
-                                {{ a.link_eps }}
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    {% endfor %}
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="criar_editar_excluir">
-                        Ação:
-                    </label>
-
-                    <select
-                        name="criar_editar_excluir"
-                        id="criar_editar_excluir"
-                        class="form-control"
-                    >
-
-                        <option value="criar">
-                            Criar novo episódio
-                        </option>
-
-                        <option value="editar">
-                            Editar episódio existente
-                        </option>
-
-                        <option value="excluir">
-                            Excluir episódio
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    <i class="fas fa-save"></i>
-                    Salvar Alterações
-                </button>
-
-            </form>
-
-            <form
-                action="{% url 'excluir' filme.id %}"
-                method="post"
-                class="delete-form"
-            >
-
-                {% csrf_token %}
-
-                <button
-                    type="submit"
-                    class="btn btn-danger"
-                >
-                    <i class="fas fa-trash"></i>
-                    Excluir Série
-                </button>
-
-            </form>
-
-        </div>
-
-        {% endif %}
-
-    </div>
-
+        </section>
     {% endif %}
-
 </div>
-
 {% endblock %}
-

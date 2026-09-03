@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{% if genero == 'serie' %}Séries{% else %}Filmes{% endif %}{% endblock %}
+{% block title %}Pesquisa{% endblock %}
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/maim.css' %}">{% endblock %}
 
 {% block content %}
-    <div class="category-header">
-        <h2 class="category-title">{% if genero == 'serie' %}Séries{% else %}Filmes{% endif %}</h2>
-    </div>
+    <div class="category-header"><h2 class="category-title">Resultado da pesquisa</h2></div>
     {% include 'components/movie_grid.html' with itens=resultado %}
 {% endblock %}
