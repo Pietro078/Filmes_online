@@ -1,0 +1,25 @@
+<h3>Gerenciar episódios</h3>
+
+<form method="post" action="{% url 'editar_filme' filme.id %}" class="admin-form">
+    {% csrf_token %}
+    <input type="hidden" name="acao" value="criar_episodio">
+    {% for field in episodio_form %}
+        <div class="form-group">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Adicionar episódio</button>
+</form>
+
+<div class="episodes-list admin-episodes">
+    {% for episodio in linksEP %}
+        <form method="post" action="{% url 'editar_filme' filme.id %}" class="episode-item admin-episode">
+            {% csrf_token %}
+            <input type="hidden" name="episodio_id" value="{{ episodio.id }}">
+            <input class="form-control" name="ep_name" value="{{ episodio.ep_name }}" required>
+            <input class="form-control" name="link_eps" value="{{ episodio.link_eps }}" required>
+            <button name="acao" value="editar_episodio" class="btn btn-primary">Editar</button>
+            <button name="acao" value="excluir_episodio" class="btn btn-danger">Excluir</button>
+        </form>
+    {% empty %}
+        <p>Nenhum episódio cadastrado.</p>
+    {% endfor %}
+</div>

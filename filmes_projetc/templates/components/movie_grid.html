@@ -1,0 +1,20 @@
+<div class="movie-grid" style="width: 100%; max-width: 100%;">
+    {% for item in itens %}
+        <div class="movie-card">
+            <a href="{% url 'filme' id=item.id %}">
+                {% if item.tamb %}
+                    <img src="https://image.tmdb.org/t/p/w500{{ item.tamb }}" alt="{{ item.nome }}">
+                {% endif %}
+                <div class="movie-card-content">
+                    <h3>{{ item.nome }}</h3>
+                    <p>{{ item.data_filme|default:"Data não informada" }}</p>
+                </div>
+            </a>
+        </div>
+    {% empty %}
+        <div class="no-results">
+            <i class="fas fa-film"></i>
+            <h3>Nenhum resultado encontrado</h3>
+        </div>
+    {% endfor %}
+</div>

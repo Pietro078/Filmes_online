@@ -4,77 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Filmes Project</title>
+    <title>{% block title %}Filmes Project{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'image/Logo filmes.png' %}">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome para ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- CSS Base -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    
-    <!-- CSS Específico da página -->
-    {% block extra_css %}
-    {% endblock %}
-    
-    <!-- Google AdSense -->
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <div id="tudo">
-        <!-- Barra de navegação superior -->
-        <div id="esquerdo">
-            <a href="{% url 'home' %}">
-                <header><img class="icon" src="{% static 'image/Logo filmes.png' %}" alt=""> Filmes Project</header>
-            </a>
-
-            <form action="{% url 'pesquisa' %}" method="POST" class="search-form">{% csrf_token %}
-                <input type="text" placeholder="Pesquisar filmes e séries..." name="pesquisa">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
-
-            <div id="abas">
-                <form action="{% url 'abas' 'filme' %}" method="post">{% csrf_token %}
-                    <button name="btnfilme" type="submit">
-                        <i class="fas fa-film"></i>
-                        <span>Filmes</span>
-                    </button>
-                </form>
-
-                <form action="{% url 'abas' 'serie' %}" method="post">{% csrf_token %}
-                    <button name="btnserie" type="submit">
-                        <i class="fas fa-tv"></i>
-                        <span>Séries</span>
-                    </button>
-                </form>
-                
-                {% if user.is_superuser %}
-                <a href="{% url 'cadastrar_filme' %}" class="admin-link">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Cadastrar</span>
-                </a>
-                {% endif %}
-            </div>
+<div id="tudo">
+    <div id="esquerdo">
+        <a href="{% url 'home' %}">
+            <header><img class="icon" src="{% static 'image/Logo filmes.png' %}" alt=""> Filmes Project</header>
+        </a>
+        <form action="{% url 'pesquisa' %}" method="get" class="search-form">
+            <input type="search" placeholder="Pesquisar filmes e séries..." name="pesquisa" value="{{ request.GET.pesquisa }}">
+            <button type="submit" aria-label="Pesquisar"><i class="fas fa-search"></i></button>
+        </form>
+        <div id="abas">
+            <a href="{% url 'abas' 'filme' %}"><i class="fas fa-film"></i><span>Filmes</span></a>
+            <a href="{% url 'abas' 'serie' %}"><i class="fas fa-tv"></i><span>Séries</span></a>
+            {% if user.is_superuser %}
+                <a href="{% url 'cadastrar_filme' %}" class="admin-link"><i class="fas fa-plus-circle"></i><span>Cadastrar</span></a>
+            {% endif %}
         </div>
-
-        <!-- Conteúdo principal -->
-        <Div id="conteudo">
-            {% block content %}{% endblock %}
-        </Div>
-        
-        
-
-        <!-- Rodapé -->
-        <footer>
-            <div class="footer-content">
-                <p>&copy; {% now "Y" %} Filmes Project - Todos os direitos reservados</p>
-            </div>
-        </footer>
     </div>
 
-    <!-- JavaScript -->
-    {% block extra_js %}{% endblock %}
+    <main id="conteudo">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer><div class="footer-content"><p>&copy; {% now "Y" %} Filmes Project</p></div></footer>
+</div>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

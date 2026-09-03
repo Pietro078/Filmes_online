@@ -1,0 +1,15 @@
+<form method="post" action="{{ action }}" class="admin-form">
+    {% csrf_token %}
+    <input type="hidden" name="acao" value="editar_filme">
+    {{ filme_form.non_field_errors }}
+    {% for field in filme_form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Salvar alterações
+    </button>
+</form>
