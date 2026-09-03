@@ -1,0 +1,559 @@
+/* Estilos principais para o site Filmes Project */
+
+/* Reset e estilos base */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #100124 0%, rgba(30, 29, 79, 0.9) 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+/* Layout principal */
+#tudo {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+
+}
+
+/* Barra de navegação superior */
+.navbar, #esquerdo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.navbar-brand, #esquerdo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    background: linear-gradient(90deg, #7b86ff, #ff7bbd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+.navbar-brand i, #esquerdo a i {
+    font-size: 32px;
+    color: #7b86ff;
+}
+
+#esquerdo a header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    background: linear-gradient(90deg, #7b86ff, #ff7bbd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Formulário de pesquisa */
+.search-form {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 20px;
+}
+
+.search-form input {
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+    outline: none;
+}
+
+.search-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search-form button {
+    background: linear-gradient(135deg, #7b86ff, #5a63d6);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-form button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #8c96ff, #6b73e6);
+}
+
+.search-form button i {
+    color: white;
+    font-size: 18px;
+}
+
+/* Abas de navegação */
+#abas, .nav-tabs {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#abas form, .nav-tabs form {
+    display: inline-flex;
+}
+
+#abas form button, .nav-tabs form button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#abas form button:hover, .nav-tabs form button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+#abas form button i, .nav-tabs form button i {
+    font-size: 18px;
+}
+
+#abas form button span, .nav-tabs form button span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Link de administrador */
+.admin-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #ff7bbd, #ff7b7b);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 123, 189, 0.3);
+}
+
+/* Conteúdo principal */
+#content {
+    flex: 1;
+    padding: 20px 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Grade de filmes */
+.movie-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 100%;
+}
+.Aba_filmes{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 100%;
+}
+.category-container{
+    width: 100%;
+    max-width: 100%;
+}
+.movie-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 100%;
+}
+
+.movie-card form {
+    width: auto;
+    height: 100%;
+}
+
+.movie-card-button {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.movie-card img, .movie-poster img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.movie-poster {
+    width: 100%;
+}
+
+.movie-title {
+    padding: 15px;
+}
+
+.movie-title h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-card-content {
+    padding: 15px;
+}
+
+.movie-card-content h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-card-content p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Detalhes do filme */
+.movie-details {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.movie-poster img {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.movie-info {
+    flex: 1;
+}
+
+.movie-info h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #ffffff, #d0d0ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.movie-info .release-date {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+.movie-info .synopsis {
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.movie-info .synopsis h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.movie-info .synopsis p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Links de download */
+.download-links {
+    margin-top: 30px;
+}
+
+.download-links h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.download-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #50c878, #3cb371);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.download-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(80, 200, 120, 0.4);
+}
+
+/* Episódios de séries */
+.episodes-list {
+    margin-top: 30px;
+}
+
+.episodes-list h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.episode-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.episode-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.episode-item i {
+    font-size: 24px;
+    margin-right: 15px;
+    color: #ffffff;
+}
+
+.episode-item span {
+    font-size: 16px;
+}
+
+/* Paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.pagination span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination a {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.pagination a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.pagination .current {
+    padding: 0 15px;
+}
+
+/* Formulários */
+.form-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #7b86ff;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #7b86ff, #5a63d6);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #8c96ff, #6b73e6);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff5e5e, #d63a3a);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ff7070, #e64c4c);
+    transform: translateY(-2px);
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navbar, #esquerdo {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    #esquerdo a header {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .search-form {
+        max-width: 100%;
+        margin: 0;
+    }
+    
+    #abas {
+        justify-content: center;
+        margin-top: 15px;
+    }
+    
+    .admin-link {
+        align-self: center;
+        margin-top: 15px;
+    }
+    
+    .movie-details {
+        flex-direction: column;
+    }
+    
+    .movie-poster {
+        align-self: center;
+        margin-bottom: 20px;
+    }
+    
+    .movie-poster img {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}

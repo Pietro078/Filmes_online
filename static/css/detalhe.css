@@ -1,0 +1,923 @@
+/* =========================================================
+   FILMES PROJECT - DETALHES DO FILME / SÉRIE
+   Arquivo: aba_filme.css
+
+   CSS totalmente isolado através de:
+   .movie-details-container
+   ========================================================= */
+
+
+/* =========================================================
+   VARIÁVEIS LOCAIS
+   ========================================================= */
+
+.movie-details-container {
+    --movie-bg-primary: #251342;
+    --movie-bg-secondary: #622a55;
+    --movie-primary: #9c416e;
+    --movie-primary-light: #d07b95;
+    --movie-text: #eabeb4;
+
+    --movie-text-secondary: rgba(234, 190, 180, 0.72);
+    --movie-border: rgba(208, 123, 149, 0.25);
+
+    --movie-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.30);
+
+    width: 100%;
+    min-height: 100%;
+
+    box-sizing: border-box;
+
+    padding: 45px 5% 70px;
+
+    color: var(--movie-text);
+}
+
+
+/* =========================================================
+   ÁREA PRINCIPAL DO FILME
+   ========================================================= */
+
+.movie-details-container .movie-details {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 350px 1fr;
+
+    gap: 45px;
+
+    padding: 35px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(98, 42, 85, 0.32),
+            rgba(37, 19, 66, 0.60)
+        );
+
+    border: 1px solid var(--movie-border);
+
+    border-radius: 18px;
+
+    box-shadow: var(--movie-shadow);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* Efeito decorativo de fundo */
+
+.movie-details-container .movie-details::before {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    top: -180px;
+    right: -150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(156, 65, 110, 0.25),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   POSTER
+   ========================================================= */
+
+.movie-details-container .movie-poster {
+    width: 100%;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+
+.movie-details-container .movie-poster img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    border-radius: 12px;
+
+    border:
+        1px solid rgba(208, 123, 149, 0.35);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.45);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.movie-details-container .movie-poster img:hover {
+    transform: scale(1.02);
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.55);
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DO FILME
+   ========================================================= */
+
+.movie-details-container .movie-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.movie-details-container .movie-title {
+    margin: 0 0 20px;
+
+    color: var(--movie-text);
+
+    font-size: clamp(1.8rem, 4vw, 3rem);
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    letter-spacing: 0.3px;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   METADADOS
+   ========================================================= */
+
+.movie-details-container .movie-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-bottom: 28px;
+}
+
+
+.movie-details-container .movie-meta span {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 38px;
+
+    gap: 8px;
+
+    padding: 0 14px;
+
+    background:
+        rgba(156, 65, 110, 0.16);
+
+    border:
+        1px solid rgba(208, 123, 149, 0.20);
+
+    border-radius: 8px;
+
+    color: var(--movie-text-secondary);
+
+    font-size: 0.9rem;
+}
+
+
+.movie-details-container .movie-meta span i {
+    color: var(--movie-primary-light);
+}
+
+
+/* =========================================================
+   SINOPSE
+   ========================================================= */
+
+.movie-details-container .synopsis {
+    margin-bottom: 30px;
+}
+
+
+.movie-details-container .synopsis h3 {
+    margin: 0 0 12px;
+
+    color: var(--movie-primary-light);
+
+    font-size: 1.2rem;
+
+    font-weight: 600;
+}
+
+
+.movie-details-container .synopsis p {
+    margin: 0;
+
+    color: var(--movie-text-secondary);
+
+    font-family: "Roboto", sans-serif;
+
+    font-size: 1rem;
+
+    line-height: 1.8;
+
+    white-space: pre-line;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   DOWNLOAD
+   ========================================================= */
+
+.movie-details-container .download-section {
+    margin-top: auto;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid rgba(208, 123, 149, 0.15);
+}
+
+
+.movie-details-container .download-section h3 {
+    margin: 0 0 18px;
+
+    color: var(--movie-primary-light);
+
+    font-size: 1.2rem;
+}
+
+
+.movie-details-container .download-links {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+.movie-details-container .btn {
+    min-height: 45px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 0 20px;
+
+    box-sizing: border-box;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+/* Botão Download */
+
+.movie-details-container .btn-download {
+    background:
+        linear-gradient(
+            135deg,
+            #9c416e,
+            #622a55
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+
+.movie-details-container .btn-download:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #d07b95,
+            #9c416e
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================================
+   LISTA DE EPISÓDIOS
+   ========================================================= */
+
+.movie-details-container .episodes-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.movie-details-container .episode-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 14px 16px;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(37, 19, 66, 0.45);
+
+    border:
+        1px solid rgba(208, 123, 149, 0.15);
+
+    border-radius: 10px;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.movie-details-container .episode-item:hover {
+    background:
+        rgba(98, 42, 85, 0.35);
+
+    border-color:
+        rgba(208, 123, 149, 0.40);
+
+    transform: translateX(3px);
+}
+
+
+.movie-details-container .episode-name {
+    color: var(--movie-text);
+
+    font-size: 0.92rem;
+
+    font-weight: 500;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ÁREA ADMINISTRATIVA
+   ========================================================= */
+
+.movie-details-container .admin-section {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 50px auto 0;
+
+    padding: 35px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(98, 42, 85, 0.25),
+            rgba(37, 19, 66, 0.60)
+        );
+
+    border:
+        1px solid rgba(156, 65, 110, 0.35);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================================================
+   TÍTULO ADMIN
+   ========================================================= */
+
+.movie-details-container .admin-title {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 0 0 30px;
+
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid rgba(208, 123, 149, 0.20);
+
+    color: var(--movie-primary-light);
+
+    font-size: 1.5rem;
+
+    font-weight: 600;
+}
+
+
+.movie-details-container .admin-title i {
+    color: var(--movie-primary);
+}
+
+
+/* =========================================================
+   FORMULÁRIO ADMIN
+   ========================================================= */
+
+.movie-details-container .admin-form-container {
+    width: 100%;
+}
+
+
+.movie-details-container .admin-form-container > h3 {
+    margin: 0 0 25px;
+
+    color: var(--movie-text);
+
+    font-size: 1.25rem;
+}
+
+
+.movie-details-container .admin-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.movie-details-container .form-group {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.movie-details-container .form-group label {
+    color: var(--movie-text-secondary);
+
+    font-size: 0.9rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   INPUTS E SELECT
+   ========================================================= */
+
+.movie-details-container .form-control {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    outline: none;
+
+    border:
+        1px solid rgba(208, 123, 149, 0.25);
+
+    border-radius: 8px;
+
+    background:
+        rgba(37, 19, 66, 0.60);
+
+    color: var(--movie-text);
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 0.9rem;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.movie-details-container .form-control::placeholder {
+    color:
+        rgba(234, 190, 180, 0.40);
+}
+
+
+.movie-details-container .form-control:focus {
+    border-color:
+        var(--movie-primary-light);
+
+    background:
+        rgba(37, 19, 66, 0.85);
+
+    box-shadow:
+        0 0 0 3px rgba(208, 123, 149, 0.10);
+}
+
+
+/* Select */
+
+.movie-details-container select.form-control {
+    cursor: pointer;
+}
+
+
+.movie-details-container select.form-control option {
+    background: #251342;
+
+    color: #eabeb4;
+}
+
+
+/* =========================================================
+   FORMULÁRIO DE EPISÓDIO
+   ========================================================= */
+
+.movie-details-container .episode-form {
+    padding: 22px;
+
+    background:
+        rgba(98, 42, 85, 0.12);
+
+    border:
+        1px solid rgba(208, 123, 149, 0.15);
+
+    border-radius: 12px;
+}
+
+
+.movie-details-container .episode-form h4 {
+    margin: 0 0 20px;
+
+    color: var(--movie-primary-light);
+
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   LINHA DO FORMULÁRIO
+   ========================================================= */
+
+.movie-details-container .form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   EPISÓDIOS ADMIN
+   ========================================================= */
+
+.movie-details-container .admin-episodes {
+    margin-top: 5px;
+
+    padding: 22px;
+
+    background:
+        rgba(37, 19, 66, 0.30);
+
+    border-radius: 12px;
+
+    border:
+        1px solid rgba(208, 123, 149, 0.12);
+}
+
+
+.movie-details-container .admin-episodes h4 {
+    margin: 0 0 18px;
+
+    color: var(--movie-primary-light);
+}
+
+
+.movie-details-container .admin-episode {
+    padding: 14px;
+}
+
+
+.movie-details-container .episode-info {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 0;
+}
+
+
+.movie-details-container .episode-link {
+    display: block;
+
+    color:
+        rgba(234, 190, 180, 0.50);
+
+    font-family: "Roboto", sans-serif;
+
+    font-size: 0.8rem;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   BOTÃO SALVAR
+   ========================================================= */
+
+.movie-details-container .btn-primary {
+    align-self: flex-start;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9c416e,
+            #622a55
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.20);
+}
+
+
+.movie-details-container .btn-primary:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #d07b95,
+            #9c416e
+        );
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   FORMULÁRIO DE EXCLUSÃO
+   ========================================================= */
+
+.movie-details-container .delete-form {
+    margin-top: 25px;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid rgba(208, 123, 149, 0.15);
+}
+
+
+/* =========================================================
+   BOTÃO EXCLUIR
+   ========================================================= */
+
+.movie-details-container .btn-danger {
+    background:
+        rgba(156, 65, 110, 0.15);
+
+    color: var(--movie-primary-light);
+
+    border:
+        1px solid rgba(208, 123, 149, 0.40);
+}
+
+
+.movie-details-container .btn-danger:hover {
+    background:
+        #9c416e;
+
+    color: #ffffff;
+
+    border-color:
+        #9c416e;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    .movie-details-container .movie-details {
+        grid-template-columns: 280px 1fr;
+
+        gap: 30px;
+
+        padding: 28px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - TABLET / MOBILE
+   ========================================================= */
+
+@media (max-width: 750px) {
+
+    .movie-details-container {
+        padding:
+            30px
+            20px
+            50px;
+    }
+
+
+    .movie-details-container .movie-details {
+        grid-template-columns: 1fr;
+
+        max-width: 600px;
+
+        padding: 25px;
+    }
+
+
+    .movie-details-container .movie-poster {
+        max-width: 350px;
+
+        margin: 0 auto;
+    }
+
+
+    .movie-details-container .admin-section {
+        padding: 25px;
+    }
+
+
+    .movie-details-container .form-row {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - CELULAR
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .movie-details-container {
+        padding:
+            20px
+            12px
+            40px;
+    }
+
+
+    .movie-details-container .movie-details {
+        padding: 18px;
+
+        border-radius: 12px;
+    }
+
+
+    .movie-details-container .movie-title {
+        font-size: 1.7rem;
+    }
+
+
+    .movie-details-container .movie-meta {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .movie-details-container .movie-meta span {
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    .movie-details-container .episode-item {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .movie-details-container .episode-item .btn-download {
+        width: 100%;
+    }
+
+
+    .movie-details-container .download-links {
+        width: 100%;
+    }
+
+
+    .movie-details-container .download-links .btn-download {
+        width: 100%;
+    }
+
+
+    .movie-details-container .admin-section {
+        padding: 18px;
+
+        border-radius: 12px;
+    }
+
+
+    .movie-details-container .admin-title {
+        font-size: 1.2rem;
+    }
+
+
+    .movie-details-container .btn-primary,
+    .movie-details-container .btn-danger {
+        width: 100%;
+    }
+
+
+    .movie-details-container .episode-form,
+    .movie-details-container .admin-episodes {
+        padding: 15px;
+    }
+
+}

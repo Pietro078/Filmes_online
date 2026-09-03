@@ -1,0 +1,561 @@
+/* =========================================================
+   FILMES PROJECT - BASE.CSS
+   Paleta:
+   #251342 - Fundo principal
+   #622a55 - Fundo secundário
+   #9c416e - Destaque
+   #d07b95 - Destaque claro
+   #eabeb4 - Texto claro
+   ========================================================= */
+
+
+/* =========================================================
+   VARIÁVEIS - ESCOPADAS AO CONTAINER PRINCIPAL
+   ========================================================= */
+
+#tudo {
+    --filmes-bg-principal: #251342;
+    --filmes-bg-secundario: #622a55;
+    --filmes-destaque: #9c416e;
+    --filmes-destaque-claro: #d07b95;
+    --filmes-texto-claro: #eabeb4;
+
+    --filmes-texto-secundario: rgba(234, 190, 180, 0.75);
+
+    --filmes-sombra:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+
+    --filmes-transicao: 0.25s ease;
+}
+
+
+/* =========================================================
+   RESET ISOLADO
+   Evita alterar elementos de outras páginas desnecessariamente
+   ========================================================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+    
+    background: #251342;
+    font-family: "Poppins", "Roboto", sans-serif;
+}
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+   ========================================================= */
+
+#tudo {
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(156, 65, 110, 0.18),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #251342 0%,
+            #1d0f33 100%
+        );
+
+    color: var(--filmes-texto-claro);
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+#tudo #esquerdo {
+    min-height: 75px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 28px;
+    padding: 0 5%;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(37, 19, 66, 0.98),
+            rgba(98, 42, 85, 0.95)
+        );
+
+    border-bottom: 1px solid rgba(208, 123, 149, 0.25);
+
+    box-shadow:
+        0 5px 25px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+    z-index: 100;
+}
+
+
+/* =========================================================
+   LOGO / NOME DO SITE
+   ========================================================= */
+
+#tudo #esquerdo > a:first-child {
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+
+#tudo #esquerdo > a:first-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 0;
+    white-space: nowrap;
+}
+
+#tudo #esquerdo > a:first-child header {
+    margin: 0;
+
+    font-size: 1.45rem;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+    color: var(--filmes-texto-claro);
+
+    white-space: nowrap;
+
+    transition: var(--filmes-transicao);
+}
+
+
+#tudo #esquerdo > a:first-child:hover header {
+    color: var(--filmes-destaque-claro);
+
+    transform: scale(2px);
+}
+
+
+/* =========================================================
+   FORMULÁRIO DE PESQUISA
+   ========================================================= */
+
+#tudo #esquerdo .search-form {
+    width: min(100%, 450px);
+
+    display: flex;
+    align-items: center;
+
+    margin-left: auto;
+
+    background: rgba(37, 19, 66, 0.65);
+
+    border: 1px solid rgba(208, 123, 149, 0.35);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    transition:
+        border-color var(--filmes-transicao),
+        box-shadow var(--filmes-transicao);
+}
+
+
+#tudo #esquerdo .search-form:focus-within {
+    border-color: var(--filmes-destaque-claro);
+
+    box-shadow:
+        0 0 0 3px rgba(208, 123, 149, 0.12);
+}
+
+
+#tudo #esquerdo .search-form input {
+    width: 100%;
+
+    padding: 12px 15px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: var(--filmes-texto-claro);
+
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+
+#tudo #esquerdo .search-form input::placeholder {
+    color: rgba(234, 190, 180, 0.55);
+}
+
+
+#tudo #esquerdo .search-form button {
+    width: 48px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--filmes-destaque-claro);
+
+    cursor: pointer;
+
+    font-size: 1rem;
+
+    transition: var(--filmes-transicao);
+}
+
+
+#tudo #esquerdo .search-form button:hover {
+    background: var(--filmes-destaque);
+
+    color: var(--filmes-texto-claro);
+}
+
+
+/* =========================================================
+   ABAS DE NAVEGAÇÃO
+   ========================================================= */
+
+#tudo #abas {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+#tudo #abas form {
+    margin: 0;
+}
+
+
+#tudo #abas form button,
+#tudo #abas .admin-link {
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 14px;
+
+    border: 1px solid transparent;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--filmes-texto-secundario);
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background var(--filmes-transicao),
+        color var(--filmes-transicao),
+        border-color var(--filmes-transicao),
+        transform var(--filmes-transicao);
+}
+
+
+/* Ícones */
+
+#tudo #abas form button i,
+#tudo #abas .admin-link i {
+    font-size: 1rem;
+}
+
+
+/* Hover */
+
+#tudo #abas form button:hover,
+#tudo #abas .admin-link:hover {
+    background: rgba(156, 65, 110, 0.3);
+
+    border-color: rgba(208, 123, 149, 0.4);
+
+    color: var(--filmes-texto-claro);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   BOTÃO DE CADASTRO
+   ========================================================= */
+
+#tudo #abas .admin-link {
+    background:
+        linear-gradient(
+            135deg,
+            #9c416e,
+            #622a55
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+#tudo #abas .admin-link:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #d07b95,
+            #9c416e
+        );
+
+    color: #ffffff;
+
+    border-color: transparent;
+}
+
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
+
+#tudo main {
+    width: 100%;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+
+#tudo footer {
+    width: 100%;
+
+    margin-top: auto;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1d0f33,
+            #251342
+        );
+
+    border-top:
+        1px solid rgba(208, 123, 149, 0.18);
+
+    box-sizing: border-box;
+}
+
+
+#tudo footer .footer-content {
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 22px 5%;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+#tudo footer .footer-content p {
+    margin: 0;
+
+    color: rgba(234, 190, 180, 0.65);
+
+    font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+body::-webkit-scrollbar-track {
+    background: #251342;
+}
+
+
+body::-webkit-scrollbar-thumb {
+    background: #622a55;
+
+    border-radius: 10px;
+
+    border: 2px solid #251342;
+}
+
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #9c416e;
+}
+
+Div #conteudo{
+    padding: 1.5%;
+}
+/* =========================================================
+   RESPONSIVIDADE - TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    #tudo #esquerdo {
+        flex-wrap: wrap;
+
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+
+    #tudo #esquerdo .search-form {
+        order: 3;
+
+        width: 100%;
+
+        margin-left: 0;
+    }
+
+
+    #tudo #abas {
+        margin-left: auto;
+    }
+
+}
+
+.icon{
+    width: 30px;
+    height: 30px;
+}
+/* =========================================================
+   RESPONSIVIDADE - CELULAR
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    #tudo #esquerdo {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        
+    }
+
+
+    #tudo #esquerdo > a:first-child {
+        text-align: center;
+    }
+
+
+    #tudo #esquerdo > a:first-child header {
+        font-size: 1.35rem;
+    }
+
+
+    #tudo #esquerdo .search-form {
+        width: 100%;
+    }
+
+
+    #tudo #abas {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        margin-left: 0;
+    }
+
+
+    #tudo #abas form,
+    #tudo #abas .admin-link {
+        flex: 1;
+    }
+
+
+    #tudo #abas form button,
+    #tudo #abas .admin-link {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - TELAS PEQUENAS
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    #tudo #abas {
+        flex-direction: column;
+    }
+
+
+    #tudo #abas form,
+
+
+
+    #tudo footer .footer-content {
+        padding:
+            18px
+            20px;
+    }
+
+
+    #tudo footer .footer-content p {
+        font-size: 0.78rem;
+    }
+
+}

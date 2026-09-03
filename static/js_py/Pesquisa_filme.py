@@ -1,5 +1,7 @@
 import requests
+
 from static.js_py.Crud_filme import ChamaDB
+
 class Pesquisa_nome_popular:
     def __init__(self,pesquisa):
         self.__pesquisa = pesquisa

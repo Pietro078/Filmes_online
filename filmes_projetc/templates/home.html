@@ -1,92 +1,42 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7552516974482581"
-      crossorigin="anonymous">
-    </script>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Filmes project</title>
-    <link rel="stylesheet" href="{% static 'css/Hoo.css' %}">
-</head>
-<body>
-  
-  <div id="tudo">
-    {% if user.is_superuser %}
-      <h1><a href="{% url 'cadastrar_filme'%}">cadastrar filme</a></h1>
-    {% endif %}
-    <div id="esquerdo">
-      <a href="{% url 'home' %}"><header>Projetc</header></a>
+{% block title %}Filmes Project - Página Inicial{% endblock %}
 
-      <form action="{% url 'pesquisa' %}" method="POST">{% csrf_token %}
-        <button  type="submit"><img class="icon" src="{% static 'image/lupa.png' %}" alt="lupa nao encontrada">
-        </button>
-          <input type="text" placeholder="Pesquisar" name="pesquisa">
-      </form>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
-        <div id="abas">
-          <form id="a" action="{% url 'abas' 'filme' %}" method="post">{% csrf_token %}
-            <button name="btnfilme" type="submit" >
-              <img draggable="false" src="{% static 'image/filme.png' %}">
-              <h3>Filmes</h3>
-            </button>
-          </form>
-
-          <form action="{% url 'abas' 'serie' %}" method="post">{% csrf_token %}
-            <button  name="btnserie" type="submit"> 
-              <img draggable="false" src="{% static 'image/database.png' %}">
-              <h3>Series</h3>
-            </button>
-          </form> 
-        </div>
+{% block content %}
+<div class="movie-grid" style="width: 100%; max-width: 100%;">
+    {% for filmes in filme %}
+    <div class="movie-card">
+        <a href="{% url 'filme' id=filmes.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ filmes.tamb }}" alt="{{ filmes.nome }}">
+            <div class="movie-card-content">
+                <h3>{{ filmes.nome }}</h3>
+                <p>{{ filmes.data_filme }}</p>
+            </div>
+        </a>
     </div>
-    
+    {% endfor %}
+</div>
 
-    <div id="direito">
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1"><i class="fas fa-angle-double-left"></i> Primeira</a>
+            <a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-angle-left"></i> Anterior</a>
+        {% endif %}
 
-      {% for filmes in filme%}
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
 
-          <form action="{% url 'filme' id=filmes.id %}"  method="POST"> {% csrf_token %}
-            <button type="submit">
-                
-                  <img id="imagem_filme" src="https://image.tmdb.org/t/p/w500/{{ filmes.tamb }}">
-                
-                  <h3>{{ filmes.nome }}</h3>
-          
-              
-            </button>
-          </form>
-        
-        {%endfor%} 
-      
-      
-    </div>
-  
-
-    <div  class="pagination">
-      <span class="step-links">
-        <h3>
-          {% if page_obj.has_previous %}
-              <a href="?page=1">&laquo; Primeira</a>
-              <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
-          {% endif %}
-
-          <span class="current">
-            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-          </span>
-
-          {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">próxima</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
-          {% endif %}
-        </h3>
-      </span>
-    </div>
-  </div>
-  
-</body>
-</html>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Próxima <i class="fas fa-angle-right"></i></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Última <i class="fas fa-angle-double-right"></i></a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

@@ -1,64 +1,48 @@
-
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7552516974482581"
-      crossorigin="anonymous">
-    </script>
 
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/abas.css' %}">
-    <title>abas</title>
-</head>
-<body>
-    
-  <div id="tudo">
-    {% if user.is_superuser %}
-      <h1><a href="{% url 'cadastrar_filme'%}">cadastrar filme</a></h1>
+{% block title %}
+    {% if 'filme' in request.path %}
+        Filmes
+    {% elif 'serie' in request.path %}
+        Séries
+    {% else %}
+        Categorias
     {% endif %}
-    <div id="esquerdo">
-      <a href="{% url 'home' %}"><header>Projetc</header></a>
+{% endblock %}
 
-      <form action="{% url 'pesquisa' %}" method="POST">{% csrf_token %}
-        <button  type="submit"><img class="icon" src="{% static 'image/lupa.png' %}" alt="lupa nao encontrada">
-        </button>
-          <input type="text" placeholder="Pesquisar" name="pesquisa">
-      </form>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/maim.css' %}">
+{% endblock %}
 
-        <div id="abas">
-          <form id="a" action="{% url 'abas' 'filme' %}" method="post">{% csrf_token %}
-            <button name="btnfilme" type="submit" >
-              <img draggable="false" src="{% static 'image/filme.png' %}">
-              <h3>Filmes</h3>
-            </button>
-          </form>
+{% block content %}
+<div class="category-header">
+    {% if 'filme' in request.path %}
+        <h2 class="category-title"><i class="fas fa-film"></i> Filmes</h2>
+        <p class="category-description">Explore nossa coleção de filmes disponíveis para download.</p>
+    {% elif 'serie' in request.path %}
+        <h2 class="category-title"><i class="fas fa-tv"></i> Séries</h2>
+        <p class="category-description">Confira nossas séries completas com todos os episódios disponíveis.</p>
+    {% endif %}
+</div>
 
-          <form action="{% url 'abas' 'serie' %}" method="post">{% csrf_token %}
-            <button  name="btnserie" type="submit"> 
-              <img draggable="false" src="{% static 'image/database.png' %}">
-              <h3>Series</h3>
-            </button>
-          </form> 
+<div class="movie-grid" style="width: 100%; max-width: 100%;">
+    {% for resultados in resultado %}
+    <div class="movie-card">
+        <a href="{% url 'filme' id=resultados.id %}">
+            <img src="https://image.tmdb.org/t/p/w500/{{ resultados.tamb }}" alt="{{ resultados.nome }}">
+            <div class="movie-card-content">
+                <h3>{{ resultados.nome }}</h3>
+                <p>{{ resultados.data_filme }}</p>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+        <div class="no-results">
+            <i class="fas fa-film"></i>
+            <h3>Nenhum resultado encontrado</h3>
+            <p>Não há conteúdo disponível nesta categoria no momento.</p>
         </div>
-    </div>
-
-    <div id="direito">
-        {% for resultados in resultado%}
-            <form action="{% url 'filme' id=resultados.id %}"  method="POST"> {% csrf_token %}
-                <button type="submit">
-            
-                    <img id="imagem_filme" src="https://image.tmdb.org/t/p/w500/{{ resultados.tamb }}">
-            
-                    <h3>{{ resultados.nome }}</h3>
-        
-                </button>
-            </form>
-    
-        {%endfor%} 
-    </div>
-    
-</body>
-</html>
+    {% endfor %}
+</div>
+{% endblock %}

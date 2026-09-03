@@ -1,53 +1,77 @@
 
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7552516974482581"
-     crossorigin="anonymous">
-    </script>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cadastro filme</title>
-    <link rel="stylesheet" href="{% static 'css/cadastra_filme.css' %}">
-</head>
-<body>
-    <form method="POST" action="{% url 'cadastrar_filme' %}">{% csrf_token %}
-        <h2>pesquisar nome publico</h2>
-        <input name="pesquisa" type="text">
-        {% if pesquisa %}
-            <h3>retorno: {{pesquisa}}</h3>
-        {% else %}
-            <h3>retorno...</h3> 
-        {% endif %}
-        <button type="submit">enviar </button>
-    </form>
 
+{% block title %}Cadastrar Novo Filme{% endblock %}
 
-    <form method="POST" action="{% url 'cadastrar_filme' %}">{% csrf_token %}
-        <h3><input placeholder="nome" type="text" name="nome"></h3>
-        
-        <h3><input placeholder="genero" type="text" name="genero"></h3>
-        
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/maim.css' %}">
+{% endblock %}
 
-        <h3><input placeholder="link" type="text " name="link"></h3>
-
-        
-        
-        <button type="submit" style="margin-top: 40px;">cadastrar</button>
-    </form>
+{% block content %}
+<div class="admin-section">
+    <h2 class="admin-title"><i class="fas fa-plus-circle"></i> Cadastrar Novo Filme/Série</h2>
     
+    <div class="admin-form-container">
+        <div class="search-section">
+            <h3>Buscar por Nome Público</h3>
+            <p class="help-text">Pesquise o filme ou série pelo nome para obter informações automaticamente do TMDB.</p>
+            
+            <form method="POST" action="{% url 'cadastrar_filme' %}" class="admin-form search-movie-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="pesquisa">Nome do Filme/Série:</label>
+                    <div class="search-input-group">
+                        <input id="pesquisa" name="pesquisa" type="text" placeholder="Ex: Vingadores, Breaking Bad" class="form-control">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                    </div>
+                </div>
+                
+                {% if pesquisa %}
+                <div class="search-result">
+                    <h4>Resultado da Busca:</h4>
+                    <p>{{ pesquisa }}</p>
+                </div>
+                {% endif %}
+            </form>
+        </div>
         
-        <h3 style="color: aliceblue;">{{filme.nome}}</h3>
+        <div class="register-section">
+            <h3>Cadastrar Manualmente</h3>
+            <p class="help-text">Preencha os campos abaixo para cadastrar um novo filme ou série.</p>
+            
+            <form method="POST" action="{% url 'cadastrar_filme' %}" class="admin-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input id="nome" type="text" name="nome" placeholder="Nome do filme ou série" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="genero">Gênero:</label>
+                    <select id="genero" name="genero" class="form-control">
+                        <option value="filme">Filme</option>
+                        <option value="serie">Série</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="link">Link Magnet:</label>
+                    <input id="link" type="text" name="link" placeholder="Link magnet do filme ou série" class="form-control">
+                </div>
+                
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Cadastrar</button>
+            </form>
+        </div>
         
-        <h3 style="color: aliceblue;">{{filme.sinopse}}</h3>
-        {%if mensagem%}
-            {{mensagem}}
-        {% endif%}
-
-
-
-
-</body>
-</html>
+        {% if filme.nome or filme.sinopse or mensagem %}
+        <div class="result-section">
+            <h3>Resultado</h3>
+            {% if filme.nome %}<p class="result-item"><strong>Nome:</strong> {{ filme.nome }}</p>{% endif %}
+            {% if filme.sinopse %}<p class="result-item"><strong>Sinopse:</strong> {{ filme.sinopse }}</p>{% endif %}
+            {% if mensagem %}<p class="result-message">{{ mensagem }}</p>{% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
